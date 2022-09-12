@@ -1,0 +1,105 @@
+from machine import Pin,PWM,I2C
+from utime import sleep
+from ssd1306 import SSD1306_I2C
+
+
+ancho = 128
+alto = 64
+
+i2c = I2C (0, scl=Pin(22),  sda=Pin(21))
+oled = SSD1306_I2C(ancho, alto, i2c)
+
+buzzer = PWM(Pin(15))
+n_do = Pin(2,Pin.IN,Pin.PULL_UP)
+n_re = Pin(4,Pin.IN,Pin.PULL_UP)
+n_mi = Pin(5,Pin.IN,Pin.PULL_UP)
+n_fa = Pin(18,Pin.IN,Pin.PULL_UP)
+n_sol = Pin(19,Pin.IN,Pin.PULL_UP)
+n_la= Pin(13,Pin.IN,Pin.PULL_UP)
+n_si = Pin(12,Pin.IN,Pin.PULL_UP)
+n_doo= Pin(14,Pin.IN,Pin.PULL_UP)
+led_r= Pin(26, Pin.OUT)
+led_g= Pin(25, Pin.OUT)
+led_b= Pin(33, Pin.OUT)
+
+def rgb_led(a, b, c):
+  led_r.value(a)
+  led_g.value(b)  
+  led_b.value(c)
+
+
+while True:
+  
+  oled.fill(0)
+  oled.text("*"*30, 0, 0)#columna luego fila
+  oled.text("notas", 49, 5,)#columna luego fila
+
+
+    
+  if n_do.value() == 0:
+    buzzer.freq(261)
+    buzzer.duty(1023)
+    oled.text("Do",60, 15)
+    oled.show()
+    rgb_led(1, 1, 1)
+    sleep(0.5)
+    
+  elif n_re.value() == 0:
+    buzzer.freq(293)
+    buzzer.duty(1023) 
+    oled.text("Re",60, 20)
+    oled.show()
+    rgb_led(0, 0, 1)
+    sleep(0.5)
+
+  elif n_mi.value() == 0:
+    buzzer.freq(329)
+    buzzer.duty(1023)
+    oled.text("Mi",60, 25)
+    oled.show()
+    rgb_led(0, 1, 0)
+    sleep(0.5)
+
+  elif n_fa.value() == 0:
+    buzzer.freq(349)
+    buzzer.duty(1023)
+    oled.text("Fa",60, 30)
+    oled.show()
+    rgb_led(0, 1, 1)
+    sleep(0.5)
+
+  elif n_sol.value() == 0:
+    buzzer.freq(392)
+    buzzer.duty(1023)
+    oled.text("Sol",60, 35)
+    oled.show()
+    rgb_led(1, 0, 0)
+    sleep(0.5)
+
+  elif n_la.value() == 0:
+    buzzer.freq(440)
+    buzzer.duty(1023)
+    oled.text("La",60, 40)
+    oled.show()
+    rgb_led(1, 0, 1)
+    sleep(0.5)
+
+  elif n_si.value() == 0:
+    buzzer.freq(493)
+    buzzer.duty(1023)
+    oled.text("Si",60, 45)
+    oled.show()
+    rgb_led(1, 1, 0)
+    sleep(0.5)
+  
+  elif n_doo.value() == 0:
+    buzzer.freq(523)
+    buzzer.duty(1023)
+    oled.text("Do",60, 50)
+    oled.show()
+    rgb_led(1, 1, 1)
+    sleep(0.5)
+  
+  else:
+    buzzer.freq(1)
+    buzzer.duty(0)
